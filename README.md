@@ -3,7 +3,7 @@ A super simple oh gosh programming language, minimalist programming language for
 
 Why WannaSmile?
 - **Minimalist:** No unnecessary noise.
-- **Brutal:** Logic-first, syntax-second.
+- **idk:** Logic-first, syntax-second.
 - **Agentic:** Built to interact with system processes natively.
 
 How to Compile
