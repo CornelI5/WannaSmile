@@ -1,0 +1,21 @@
+# --- Binaries & Executables ---
+*.out
+*.exe
+*.o
+*.so
+*.a
+
+# --- IDE/Editor Junk ---
+.vscode/
+.idea/
+*.swp
+*.DS_Store
+
+# --- OS Junk ---
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# --- WannaSmile Runtime ---
+*.log
+*.tmp
