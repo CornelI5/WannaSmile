@@ -1,0 +1,14 @@
+#include "../src/engine.h"
+
+T U() {
+    // Basic output
+    s("WannaSmile isz redi for exsion!\n"),
+
+    // Brutal conditional
+    t mood : 1,
+    ?(mood == 1) {
+        s("sistem isz warking properli.\n"),
+    },
+    
+    cm;
+}
