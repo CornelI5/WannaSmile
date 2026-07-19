@@ -1,12 +1,14 @@
 #include <stdio.h>
-#include "../include/lexer.h"
+#include <stdlib.h>
+#include "compiler.h"
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     if (argc < 2) {
-        printf("Usage: wsmc <file.wsm>\n");
-        return 1;
+        fprintf(stderr, "Usage: %s <input.wsm>\n", argv[0]);
+        exit(1);
     }
-    
-    printf("Compiling: %s\n", argv[1]);
+
+    printf("[!] Initializing WannaSmile Compiler v0.1\n");
     return 0;
+}
 }
