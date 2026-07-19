@@ -2,14 +2,28 @@
 #define TOKEN_H
 
 typedef enum {
-    TOK_INC, TOK_TYPE, TOK_MAIN, TOK_LPAREN, TOK_RPAREN,
-    TOK_LBRACE, TOK_RBRACE, TOK_SEMICOLON, TOK_IDENT,
-    TOK_STRING, TOK_PRINT, TOK_RETURN, TOK_EOF, TOK_ERROR
+    TOK_T,          // 't' 
+    TOK_T_U,        // 'T U' 
+    TOK_S,          // 's' 
+    TOK_X,          // 'x' 
+    TOK_CM,         // 'cm' 
+    TOK_QUESTION,   // '?' 
+    TOK_I,          // 'I' 
+    TOK_COLON,      // ':' 
+    TOK_COMMA,      // ',' 
+    TOK_MINUS,      // '-' 
+    TOK_LPAREN,     // '('
+    TOK_RPAREN,     // ')'
+    TOK_LBRACE,     // '{'
+    TOK_RBRACE,     // '}'
+    TOK_STRING,     // "text"
+    TOK_NUMBER,     // 1, 2, 3
+    TOK_EOF
 } TokenType;
 
 typedef struct {
     TokenType type;
-    char *value;
+    const char *value;
 } Token;
 
 #endif
