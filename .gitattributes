@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.wsm linguist-language=WannaSmile
+*.o binary
+*.bin binary
