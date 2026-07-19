@@ -1,12 +1,5 @@
-#include "token.h"
+#include "../include/token.h"
 #include <unistd.h>
-
-int str_compare(const char *s1, const char *s2, int n) {
-    for (int i = 0; i < n; i++) {
-        if (s1[i] != s2[i]) return 0;
-    }
-    return 1;
-}
 
 void scan_wannasmile(const char *source) {
     int i = 0;
@@ -22,32 +15,35 @@ void scan_wannasmile(const char *source) {
             continue;
         }
 
+        if (source[i] == '[') {
+            write(1, "[TOKEN] TOK_LBRACE (Mapped from '[')\n", 37);
+            i++;
+            continue;
+        }
+        if (source[i] == ']') {
+            write(1, "[TOKEN] TOK_RBRACE (Mapped from ']')\n", 37);
+            i++;
+            continue;
+        }
+
         if (source[i] == '?') {
-            write(1, "[TOKEN] TOK_QUESTION (if)\n", 26);
+            write(1, "[TOKEN] TOK_QUESTION (?)\n", 25);
             i++; continue;
         }
         if (source[i] == 'I') {
-            write(1, "[TOKEN] TOK_I (else)\n", 21);
+            write(1, "[TOKEN] TOK_I (I)\n", 18);
             i++; continue;
         }
         if (source[i] == ',') {
-            write(1, "[TOKEN] TOK_COMMA (newline/terminator)\n", 39);
+            write(1, "[TOKEN] TOK_COMMA (,)\n", 22);
             i++; continue;
         }
         if (source[i] == ':') {
-            write(1, "[TOKEN] TOK_COLON (=)\n", 22);
+            write(1, "[TOKEN] TOK_COLON (:)\n", 22);
             i++; continue;
         }
         if (source[i] == '-') {
-            write(1, "[TOKEN] TOK_MINUS (array)\n", 26);
-            i++; continue;
-        }
-        if (source[i] == '{') {
-            write(1, "[TOKEN] TOK_LBRACE\n", 19);
-            i++; continue;
-        }
-        if (source[i] == '}') {
-            write(1, "[TOKEN] TOK_RBRACE\n", 19);
+            write(1, "[TOKEN] TOK_MINUS (-)\n", 22);
             i++; continue;
         }
         if (source[i] == '(') {
@@ -60,22 +56,22 @@ void scan_wannasmile(const char *source) {
         }
 
         if (source[i] == 'c' && source[i+1] == 'm') {
-            write(1, "[TOKEN] TOK_CM (return 0)\n", 26);
+            write(1, "[TOKEN] TOK_CM (cm)\n", 20);
             i += 2;
             continue;
         }
-        if (source[i] == 's' && (source[i+1] == '(' || source[i+1] == ' ')) {
-            write(1, "[TOKEN] TOK_S (print)\n", 22);
+        if (source[i] == 's' && source[i+1] == '(') {
+            write(1, "[TOKEN] TOK_S (s)\n", 18);
             i++;
             continue;
         }
-        if (source[i] == 'x' && (source[i+1] == '(' || source[i+1] == ' ')) {
-            write(1, "[TOKEN] TOK_X (spawn)\n", 22);
+        if (source[i] == 'x' && source[i+1] == '(') {
+            write(1, "[TOKEN] TOK_X (x)\n", 18);
             i++;
             continue;
         }
-        if (source[i] == 't' && (source[i+1] == ' ' || source[i+1] == 'I' || source[i+1] == 'p')) {
-            write(1, "[TOKEN] TOK_T (int type)\n", 25);
+        if (source[i] == 't' && (source[i+1] == ' ' || source[i+1] == 'p')) {
+            write(1, "[TOKEN] TOK_T (t)\n", 18);
             i++;
             continue;
         }
@@ -88,7 +84,13 @@ void scan_wannasmile(const char *source) {
             continue;
         }
 
-        i++;
+        if (source[i] >= '0' && source[i] <= '9') {
+            write(1, "[TOKEN] TOK_NUMBER\n", 19);
+            while (source[i] >= '0' && source[i] <= '9') i++;
+            continue;
+        }
+
+        i++; 
     }
     write(1, "[TOKEN] TOK_EOF\n", 16);
 }
