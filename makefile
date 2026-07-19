@@ -1,10 +1,11 @@
 CC = gcc
-CFLAGS = -Iinclude
-SRC = src/*.c
+CFLAGS = -Iinclude -Wall -Wextra
+SRC = $(wildcard src/*.c)
 OBJ = $(SRC:.c=.o)
+TARGET = wsmc
 
-wsmc: $(OBJ)
-	$(CC) -o wsmc $(OBJ)
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
-	rm -f src/*.o wsmc
+	rm -f src/*.o $(TARGET)
