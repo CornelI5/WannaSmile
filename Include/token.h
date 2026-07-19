@@ -1,97 +1,29 @@
-#include "../include/token.h"
-#include <unistd.h>
+#ifndef TOKEN_H
+#define TOKEN_H
 
-void scan_wannasmile(const char *source) {
-    int i = 0;
-    while (source[i] != '\0') {
-        if (source[i] == ' ' || source[i] == '\t' || source[i] == '\n') {
-            i++;
-            continue;
-        }
+typedef enum {
+    TOK_T,          // 't' (Primitive integer data type)
+    TOK_T_U,        // 'T U' (Main function entry point)
+    TOK_S,          // 's' (Built-in print string function)
+    TOK_X,          // 'x' (Built-in process spawning function)
+    TOK_CM,         // 'cm' (Return statement / exit status 0)
+    TOK_QUESTION,   // '?' (Conditional if statement)
+    TOK_I,          // 'I' (Conditional else statement)
+    TOK_COLON,      // ':' (Assignment operator)
+    TOK_COMMA,      // ',' (Instruction terminator / custom newline)
+    TOK_MINUS,      // '-' (Array structure marker)
+    TOK_LPAREN,     // '(' (Left parenthesis)
+    TOK_RPAREN,     // ')' (Right parenthesis)
+    TOK_LBRACE,     // '{' (Left scope brace - internally mapped from '[')
+    TOK_RBRACE,     // '}' (Right scope brace - internally mapped from ']')
+    TOK_STRING,     // String literal data ("text")
+    TOK_NUMBER,     // Numeric literal data (1, 2, 3...)
+    TOK_EOF         // End Of File indicator
+} TokenType;
 
-        if (source[i] == 'T' && source[i+1] == ' ' && source[i+2] == 'U') {
-            write(1, "[TOKEN] TOK_T_U (int main)\n", 27);
-            i += 3;
-            continue;
-        }
+typedef struct {
+    TokenType type;
+    const char *value;
+} Token;
 
-        if (source[i] == '[') {
-            write(1, "[TOKEN] TOK_LBRACE (Mapped from '[')\n", 37);
-            i++;
-            continue;
-        }
-        if (source[i] == ']') {
-            write(1, "[TOKEN] TOK_RBRACE (Mapped from ']')\n", 37);
-            i++;
-            continue;
-        }
-
-        // 3. Cek Simbol Tunggal Lainnya
-        if (source[i] == '?') {
-            write(1, "[TOKEN] TOK_QUESTION (?)\n", 25);
-            i++; continue;
-        }
-        if (source[i] == 'I') {
-            write(1, "[TOKEN] TOK_I (I)\n", 18);
-            i++; continue;
-        }
-        if (source[i] == ',') {
-            write(1, "[TOKEN] TOK_COMMA (,)\n", 22);
-            i++; continue;
-        }
-        if (source[i] == ':') {
-            write(1, "[TOKEN] TOK_COLON (:)\n", 22);
-            i++; continue;
-        }
-        if (source[i] == '-') {
-            write(1, "[TOKEN] TOK_MINUS (-)\n", 22);
-            i++; continue;
-        }
-        if (source[i] == '(') {
-            write(1, "[TOKEN] TOK_LPAREN\n", 19);
-            i++; continue;
-        }
-        if (source[i] == ')') {
-            write(1, "[TOKEN] TOK_RPAREN\n", 19);
-            i++; continue;
-        }
-
-        if (source[i] == 'c' && source[i+1] == 'm') {
-            write(1, "[TOKEN] TOK_CM (cm)\n", 20);
-            i += 2;
-            continue;
-        }
-        if (source[i] == 's' && source[i+1] == '(') {
-            write(1, "[TOKEN] TOK_S (s)\n", 18);
-            i++;
-            continue;
-        }
-        if (source[i] == 'x' && source[i+1] == '(') {
-            write(1, "[TOKEN] TOK_X (x)\n", 18);
-            i++;
-            continue;
-        }
-        if (source[i] == 't' && (source[i+1] == ' ' || source[i+1] == 'p')) {
-            write(1, "[TOKEN] TOK_T (t)\n", 18);
-            i++;
-            continue;
-        }
-
-        if (source[i] == '"') {
-            write(1, "[TOKEN] TOK_STRING\n", 19);
-            i++;
-            while (source[i] != '"' && source[i] != '\0') i++;
-            if (source[i] == '"') i++;
-            continue;
-        }
-
-        if (source[i] >= '0' && source[i] <= '9') {
-            write(1, "[TOKEN] TOK_NUMBER\n", 19);
-            while (source[i] >= '0' && source[i] <= '9') i++;
-            continue;
-        }
-
-        i++; 
-    }
-    write(1, "[TOKEN] TOK_EOF\n", 16);
-}
+#endif
