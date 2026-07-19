@@ -1,25 +1,18 @@
 #include "../include/token.h"
 #include <stdio.h>
-#include <string.h>
-#include <ctype.h>
 
-void lexer(char* source) {
-    int i = 0;
-    while (source[i] != '\0') {
-        if (strncmp(&source[i], "#inc", 4) == 0) {
-            printf("TOKEN: INCLUDE\n");
-            i += 4;
-        } else if (source[i] == 'T') {
-            printf("TOKEN: TYPE\n");
-            i++;
-        } else if (source[i] == 'U') {
-            printf("TOKEN: MAIN\n");
-            i++;
-        } else if (source[i] == ']') {
-            printf("TOKEN: RBRACE\n");
-            i++;
-        } else {
-            i++;
+void next_token(FILE *f) {
+    char c;
+    while ((c = fgetc(f)) != EOF) {
+        if (c == ' ' || c == '\n' || c == '\t') continue;
+        
+        switch(c) {
+            case '#': printf("TOKEN_HASH\n"); break;
+            case 'T': printf("TOKEN_TYPE\n"); break;
+            case 'U': printf("TOKEN_MAIN\n"); break;
+            case 's': printf("TOKEN_PRINT\n"); break;
+            case ']': printf("TOKEN_CLOSE\n"); break;
+            default: break;
         }
     }
 }
